@@ -1,0 +1,97 @@
+module ietf-radius {
+  namespace "urn:ietf:params:xml:ns:yang:ietf-radius";
+  prefix "sys";
+
+  organization
+    "UMU";
+
+  contact
+    "Alejandro Perez";
+
+  description
+    "This module allows configuring a RADIUS server.";
+
+  revision 2016-06-17 {
+    description
+      "Initial revision.";
+    reference
+      "XXXX";
+  }
+
+
+  /*
+   * Configuration data nodes
+   */
+
+  container radius-server {
+    description
+      "RADIUS server configuration";
+
+    container certificates {
+        leaf ca {
+            type string;
+            description "CA certificate in DER format";
+        }
+        leaf server {
+            type string;
+            description "Server certificate in DER format";
+        }
+    }
+
+    container clients {
+        description "RADIUS clients";
+        list client {
+            key "host";
+            description "List of clients";
+            leaf host {
+                type string;
+                description "Host name of the client";
+            }
+            leaf secret {
+                type string;
+                description "Secret for the client";
+            }
+        }
+        list tls-client {
+            key "host";
+            description "List of TLS clients";
+            leaf host {
+                type string;
+                description "Host name of the client";
+            }
+        }
+    }
+
+    container homeservers {
+        description "RADIUS home servers";
+        list homeserver {
+            key "realm";
+            description "List of home servers";
+            leaf realm  {
+                type string;
+                description "realm of the home server";
+            }
+            leaf host  {
+                type string;
+                description "hostname of the home server";
+            }
+            leaf secret {
+                type string;
+                description "Secret for the home server";
+            }
+        }
+        list tls-homeserver {
+            key "realm";
+            description "List of TLS home servers";
+            leaf realm  {
+                type string;
+                description "realm of the home server";
+            }
+            leaf host  {
+                type string;
+                description "hostname of the home server";
+            }
+        }
+    }
+  }
+}
